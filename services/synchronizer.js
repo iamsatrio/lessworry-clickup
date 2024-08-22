@@ -185,9 +185,5 @@ async function subtaskSync(payload) {
 
 module.exports = {
     dateSync,
-    relationSync,
-    counterFeedbackStaging,
-    counterFeedbackProd,
-    subtaskSync,
-    autoCompleteStatus
+    subtaskSync
 }
