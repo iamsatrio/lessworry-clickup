@@ -215,7 +215,7 @@ async function inboundStock(payload) {
                 }
             });
         }
-        
+
         // Set theme from parent task
         let theme = await asyncFilter(parent.custom_fields, async (i) => {
             return i.id == theme_cf_id;
@@ -243,5 +243,6 @@ async function inboundStock(payload) {
 
 module.exports = {
     dateSync,
-    subtaskSync
+    subtaskSync,
+    inboundStock
 }
