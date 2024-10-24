@@ -222,22 +222,19 @@ async function inboundStock(payload) {
         let ho_item = await asyncFilter(masterStock.data.tasks, async (i) => {
             return i.name == item_name;
         });
-        ho_item[0]
-        console.log("===========================");
-        console.log(ho_item[0]);
-        console.log("===========================");
 
         //Get latest Stok Masuk on Master Stock HO
         let latest_inbound_stock_ho = await asyncFilter(ho_item[0].custom_fields, async (i) => {
             return i.id == ho_inbound_stock_cf_id;
         });
         console.log("===========================");
-        console.log(latest_inbound_stock_ho.value);
+        console.log(latest_inbound_stock_ho);
         console.log("===========================");
         console.log(`https://api.clickup.com/api/v2/task/${ho_item[0].id}/field/${ho_inbound_stock_cf_id}`);
         console.log("===========================");
-        console.log(parseInt(latest_inbound_stock_ho.value)+parseInt(quantity))
+        console.log(parseInt(latest_inbound_stock_ho.value))
         console.log("===========================");
+        console.log(parseInt(quantity));
         
             await axios({
                 method: "POST",
