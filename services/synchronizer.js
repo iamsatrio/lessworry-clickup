@@ -197,11 +197,6 @@ async function inboundStock(payload) {
         let item_name = await asyncFilter(task.custom_fields, async (i) => {
             return i.id == item_name_cf_id;
         });
-        // console.log("===========================");
-        // console.log(item_name);
-        // console.log("===========================");
-        // console.log(item_name[0].type_config.options[item_name[0].value].name);
-        // console.log("===========================");
         item_name = item_name[0].type_config.options[item_name[0].value].name;
         console.log("===========================");
         console.log(item_name);
@@ -210,11 +205,6 @@ async function inboundStock(payload) {
         let quantity = await asyncFilter(task.custom_fields, async (i) => {
             return i.id == quantity_cf_id;
         });
-        // console.log("===========================");
-        // console.log(quantity);
-        // console.log("===========================");
-        // console.log(quantity[0].value);
-        // console.log("===========================");
         quantity = quantity[0].value;
         console.log("===========================");
         console.log(quantity);
@@ -225,7 +215,7 @@ async function inboundStock(payload) {
             url: `https://api.clickup.com/api/v2/list/${list_master_stock_ho}/task`
         });
         console.log("===========================");
-        console.log(masterStock)
+        console.log(masterStock.data.tasks)
         console.log("===========================");
 
         
