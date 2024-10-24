@@ -197,14 +197,21 @@ async function inboundStock(payload) {
         let item_name = await asyncFilter(task.custom_fields, async (i) => {
             return i.id == item_name_cf_id;
         });
+        console.log("===========================");
         console.log(item_name);
-        console.log(item_name[0].type_config.options[item_name[0].value]);
+        console.log("===========================");
+        console.log(item_name[0].type_config.options[item_name[0].value].name);
+        console.log("===========================");
 
         ////Get custom field Nama Barang
         let quantity = await asyncFilter(task.custom_fields, async (i) => {
             return i.id == quantity_cf_id;
         });
+        console.log("===========================");
         console.log(quantity);
+        console.log("===========================");
+        console.log(quantity[0].type_config.options[quantity[0].value].value);
+        console.log("===========================");
 
         ////Get List Master Stock HO
         masterStock = await axios({
