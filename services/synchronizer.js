@@ -210,7 +210,7 @@ async function inboundStock(payload) {
         console.log("===========================");
         console.log(quantity);
         console.log("===========================");
-        console.log(quantity[0].type_config.options[quantity[0].value].value);
+        console.log(quantity[0].value);
         console.log("===========================");
 
         ////Get List Master Stock HO
