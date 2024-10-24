@@ -7,16 +7,11 @@ const mongo = require('./mongo');
 
 
 const webhook_cf_id = "a003363d-a9ab-4acf-a33b-93b4ae5fd430"
-const epic_release_cf_id = "dccb4f61-d762-4403-b560-b452216e34d2"
-const theme_cf_id = "71aa8337-49a5-4ba8-986e-409b46049e4e"
-const quarter_cf_id = "ecb1c819-265d-42bb-918b-bc73d7df93c6"
-
-const list_master_stock_ho = "901604673187"
-const ho_item_name_cf_id = "a3431d54-97ed-4af5-a3fd-02e6f22f1146"
-const ho_quantity_cf_id = "9f792dbb-003b-4052-86f9-444896ac3548"
-
-const ho_inbound_stock_cf_id = "3a755599-00a3-41d1-bcd3-907b4b0dbe13"
-const ho_outbound_stock_cf_id = "69adcc14-a0f2-4aee-b9cb-e6f956ab52f0"
+const item_name_cf_id = "a3431d54-97ed-4af5-a3fd-02e6f22f1146"
+const quantity_cf_id = "9f792dbb-003b-4052-86f9-444896ac3548"
+const master_stock_ho_cf_id = "901604673187"
+const inbound_stock_cf_id = "3a755599-00a3-41d1-bcd3-907b4b0dbe13"
+const outbound_stock_cf_id = "69adcc14-a0f2-4aee-b9cb-e6f956ab52f0"
 
 const outlet_cf_id = "71e09edd-64a4-4265-9569-dc8656ad7bd3"
 
@@ -88,120 +83,36 @@ async function dateSync(payload, type) {
     }
 }
 
-
-// untuk EPIC RELEASE, REVIEWER & PM ketika buat subtask
-async function subtaskSync(payload) {
-    try {
-        let task = payload
-        let parent = (task.parent) ? task.parent : false;
-        if (!parent) return 'NO'
-
-        parent = await axios({
-            method: "GET",
-            url: `https://api.clickup.com/api/v2/task/${parent}`
-        });
-        parent = parent.data
-        
-        
-        // Set epic release from parent task
-        let epic_release = await asyncFilter(parent.custom_fields, async (i) => {
-            return i.id == epic_release_cf_id;
-        });
-        console.log(epic_release[0].value);
-        if (typeof epic_release[0].value !== 'undefined' && epic_release[0].value) {
-            console.log('YEEY');
-            await axios({
-                method: "POST",
-                url: `https://api.clickup.com/api/v2/task/${task.id}/field/${epic_release_cf_id}`,
-                data: {
-                    "value": epic_release[0].value
-                }
-            });
-        }
-
-         // Set pm from parent task
-        // let pm = await asyncFilter(parent.custom_fields, async (i) => {
-        //     return i.id == pm_cf_id;
-        // });
-        // console.log(pm[0].value);
-        // if (typeof pm[0].value !== 'undefined' && pm[0].value) {
-        //     console.log('YOOY');
-        //     await axios({
-        //         method: "POST",
-        //         url: `https://api.clickup.com/api/v2/task/${task.id}/field/${pm_cf_id}`,
-        //         data: {
-        //             "value": {add: [pm[0].value[0].id]}
-        //         }
-        //     });
-        // }
-
-         // Set reviewer from parent task
-        // let reviewer = await asyncFilter(parent.custom_fields, async (i) => {
-        //     return i.id == reviewer_cf_id;
-        // });
-        // console.log(reviewer[0].value);
-        // if (typeof reviewer[0].value !== 'undefined' && reviewer[0].value) {
-        //     console.log('YUUY');
-        //     await axios({
-        //         method: "POST",
-        //         url: `https://api.clickup.com/api/v2/task/${task.id}/field/${reviewer_cf_id}`,
-        //         data: {
-        //             "value": {add: [reviewer[0].value[0].id]}
-        //         }
-        //     });
-        // }
-
-        
-         // Set quarter from parent task
-        let quarter = await asyncFilter(parent.custom_fields, async (i) => {
-            return i.id == quarter_cf_id;
-        });
-        console.log(quarter[0].type_config.options[quarter[0].value].id);
-        if (typeof quarter[0].type_config.options[quarter[0].value].id !== 'undefined' && quarter[0].type_config.options[quarter[0].value].id) {
-            console.log('YAAY');
-            await axios({
-                method: "POST",
-                url: `https://api.clickup.com/api/v2/task/${task.id}/field/${quarter_cf_id}`,
-                data: {
-                    "value": quarter[0].type_config.options[quarter[0].value].id
-                }
-            });
-        }
-
-        // Set theme from parent task
-        let theme = await asyncFilter(parent.custom_fields, async (i) => {
-            return i.id == theme_cf_id;
-        });
-        console.log(theme[0].type_config.options[theme[0].value].id);
-        if (typeof theme[0].type_config.options[theme[0].value].id !== 'undefined' && theme[0].type_config.options[theme[0].value].id) {
-            console.log('YIIY');
-            await axios({
-                method: "POST",
-                url: `https://api.clickup.com/api/v2/task/${task.id}/field/${theme_cf_id}`,
-                data: {
-                    "value": theme[0].type_config.options[theme[0].value].id
-                }
-            });
-        }
-
-        
-        return 'OK'
-    } catch (error) {
-        console.log("====== Start Err ClickUp =====")
-        console.log(error)
-        console.log("====== End Err ClickUp =====")
-    }
-}
-
-
-async function inboundStockHO(payload) {
+async function inboundStock(payload) {
     try {
         let task = payload
         // console.log(task);
-        
+
+        let master_stock_cf_id = "";
+
+        ////Get custom field Outlet
+        let outlet = await asyncFilter(task.custom_fields, async (i) => {
+            return i.id == outlet_cf_id;
+        });
+        outlet = outlet[0].type_config.options[outlet[0].value].name;
+        console.log("===========================");
+        console.log(outlet)
+        console.log("===========================");
+
+        if(typeof outlet !== 'undefined' && outlet){
+            if(outlet == "HO"){
+                master_stock_cf_id = master_stock_ho_cf_id
+            }else if(outlet == "Bangka"){
+                master_stock_cf_id = "901604683755"
+            }
+        }
+        console.log("===========================");
+        console.log(master_stock_cf_id);
+        console.log("===========================");
+
         ////Get custom field Nama Barang
         let item_name = await asyncFilter(task.custom_fields, async (i) => {
-            return i.id == ho_item_name_cf_id;
+            return i.id == item_name_cf_id;
         });
         item_name = item_name[0].type_config.options[item_name[0].value].name;
         console.log("===========================");
@@ -209,7 +120,7 @@ async function inboundStockHO(payload) {
         console.log("===========================");
         ////Get custom field Jumlah Barang
         let quantity = await asyncFilter(task.custom_fields, async (i) => {
-            return i.id == ho_quantity_cf_id;
+            return i.id == quantity_cf_id;
         });
         quantity = quantity[0].value;
         console.log("===========================");
@@ -218,30 +129,59 @@ async function inboundStockHO(payload) {
         ////Get List Master Stock HO
         masterStock = await axios({
             method: "GET",
-            url: `https://api.clickup.com/api/v2/list/${list_master_stock_ho}/task`
+            url: `https://api.clickup.com/api/v2/list/${master_stock_cf_id}/task`
         });
         ////Get task List HO based on Nama Barang
-        let ho_item = await asyncFilter(masterStock.data.tasks, async (i) => {
+        let items = await asyncFilter(masterStock.data.tasks, async (i) => {
             return i.name == item_name;
         });
 
-        //Get latest Stok Masuk on Master Stock HO
-        let latest_inbound_stock_ho = await asyncFilter(ho_item[0].custom_fields, async (i) => {
-            return i.id == ho_inbound_stock_cf_id;
+        //Get latest Stok Masuk on Master Stock
+        let latest_inbound_stock = await asyncFilter(items[0].custom_fields, async (i) => {
+            return i.id == inbound_stock_cf_id;
         });
-        latest_inbound_stock_ho = latest_inbound_stock_ho[0].value;
+        latest_inbound_stock = latest_inbound_stock[0].value;
         console.log("===========================");
-        console.log(parseInt(latest_inbound_stock_ho))
+        console.log(parseInt(latest_inbound_stock))
         console.log("===========================");
         console.log(parseInt(quantity));
         
             await axios({
                 method: "POST",
-                url: `https://api.clickup.com/api/v2/task/${ho_item[0].id}/field/${ho_inbound_stock_cf_id}`,
+                url: `https://api.clickup.com/api/v2/task/${items[0].id}/field/${inbound_stock_cf_id}`,
                 data: {
-                    "value": parseInt(latest_inbound_stock_ho)+parseInt(quantity)
+                    "value": parseInt(latest_inbound_stock)+parseInt(quantity)
                 }
             });
+
+        
+            if(outlet !== "HO"){
+                masterStock = await axios({
+                    method: "GET",
+                    url: `https://api.clickup.com/api/v2/list/${master_stock_ho_cf_id}/task`
+                });
+                ////Get task List HO based on Nama Barang
+                let ho_items = await asyncFilter(masterStock.data.tasks, async (i) => {
+                    return i.name == item_name;
+                });
+                //Get latest Stok Keluar on Master Stock HO
+                let latest_outbound_stock_ho = await asyncFilter(ho_items[0].custom_fields, async (i) => {
+                    return i.id == outbound_stock_cf_id;
+                });
+                latest_outbound_stock_ho = latest_outbound_stock_ho[0].value;
+                console.log("===========================");
+                console.log(parseInt(latest_outbound_stock_ho))
+                console.log("===========================");
+                console.log(parseInt(quantity));
+                
+                    await axios({
+                        method: "POST",
+                        url: `https://api.clickup.com/api/v2/task/${ho_items[0].id}/field/${outbound_stock_cf_id}`,
+                        data: {
+                            "value": parseInt(latest_outbound_stock_ho)+parseInt(quantity)
+                        }
+                    });
+            }
 
         return 'OK'
     } catch (error) {
@@ -253,6 +193,6 @@ async function inboundStockHO(payload) {
 
 module.exports = {
     dateSync,
-    subtaskSync,
-    inboundStockHO
+    inboundStock,
+    outboundStock,
 }
