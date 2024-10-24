@@ -227,12 +227,9 @@ async function inboundStock(payload) {
         let latest_inbound_stock_ho = await asyncFilter(ho_item[0].custom_fields, async (i) => {
             return i.id == ho_inbound_stock_cf_id;
         });
+        latest_inbound_stock_ho = latest_inbound_stock_ho[0].value;
         console.log("===========================");
-        console.log(latest_inbound_stock_ho);
-        console.log("===========================");
-        console.log(`https://api.clickup.com/api/v2/task/${ho_item[0].id}/field/${ho_inbound_stock_cf_id}`);
-        console.log("===========================");
-        console.log(parseInt(latest_inbound_stock_ho.value))
+        console.log(parseInt(latest_inbound_stock_ho))
         console.log("===========================");
         console.log(parseInt(quantity));
         
