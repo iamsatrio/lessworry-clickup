@@ -18,6 +18,8 @@ const ho_quantity_cf_id = "9f792dbb-003b-4052-86f9-444896ac3548"
 const ho_inbound_stock_cf_id = "3a755599-00a3-41d1-bcd3-907b4b0dbe13"
 const ho_outbound_stock_cf_id = "69adcc14-a0f2-4aee-b9cb-e6f956ab52f0"
 
+const outlet_cf_id = "71e09edd-64a4-4265-9569-dc8656ad7bd3"
+
 
 axios.defaults.headers.common['Authorization'] = config.clickupToken;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -192,7 +194,7 @@ async function subtaskSync(payload) {
 }
 
 
-async function inboundStock(payload) {
+async function inboundStockHO(payload) {
     try {
         let task = payload
         // console.log(task);
@@ -252,5 +254,5 @@ async function inboundStock(payload) {
 module.exports = {
     dateSync,
     subtaskSync,
-    inboundStock
+    inboundStockHO
 }
