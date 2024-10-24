@@ -214,8 +214,12 @@ async function inboundStock(payload) {
             method: "GET",
             url: `https://api.clickup.com/api/v2/list/${list_master_stock_ho}/task`
         });
+        ////Get task List HO based on Nama Barang
+        let ho_item_name = await asyncFilter(masterStock.data.tasks, async (i) => {
+            return i.name == item_name;
+        });
         console.log("===========================");
-        console.log(masterStock.data)
+        console.log(ho_item_name)
         console.log("===========================");
 
         
