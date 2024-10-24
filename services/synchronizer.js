@@ -191,19 +191,20 @@ async function subtaskSync(payload) {
 async function inboundStock(payload) {
     try {
         let task = payload
-        // console.log(task)
+        // console.log(task);
         
         ////Get custom field Nama Barang
         let item_name = await asyncFilter(task.custom_fields, async (i) => {
             return i.id == item_name_cf_id;
         });
-        console.log(item_name)
+        console.log(item_name);
+        console.log(item_name[0].type_config.options[item_name[0].value]);
 
         ////Get custom field Nama Barang
         let quantity = await asyncFilter(task.custom_fields, async (i) => {
             return i.id == quantity_cf_id;
         });
-        // console.log(quantity)
+        console.log(quantity);
 
         ////Get List Master Stock HO
         masterStock = await axios({
@@ -212,17 +213,14 @@ async function inboundStock(payload) {
         });
         // console.log(masterStock)
 
-        // let master_stock = await asyncFilter(masterStock.data, async (i) => {
-        //     return i.id == item;
-        // });
-
-        // if (typeof item_name[0].value !== 'undefined' && item_name[0].value) {
-        //     console.log('YEEY');
+        
+        // if (typeof theme[0].type_config.options[theme[0].value].id !== 'undefined' && theme[0].type_config.options[theme[0].value].id) {
+        //     console.log('YIIY');
         //     await axios({
         //         method: "POST",
-        //         url: `https://api.clickup.com/api/v2/task/${task.id}/field/${epic_release_cf_id}`,
+        //         url: `https://api.clickup.com/api/v2/task/${task.id}/field/${theme_cf_id}`,
         //         data: {
-        //             "value": epic_release[0].value
+        //             "value": theme[0].type_config.options[theme[0].value].id
         //         }
         //     });
         // }
