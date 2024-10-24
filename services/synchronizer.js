@@ -197,28 +197,36 @@ async function inboundStock(payload) {
         let item_name = await asyncFilter(task.custom_fields, async (i) => {
             return i.id == item_name_cf_id;
         });
+        // console.log("===========================");
+        // console.log(item_name);
+        // console.log("===========================");
+        // console.log(item_name[0].type_config.options[item_name[0].value].name);
+        // console.log("===========================");
+        item_name = item_name[0].type_config.options[item_name[0].value].name;
         console.log("===========================");
         console.log(item_name);
         console.log("===========================");
-        console.log(item_name[0].type_config.options[item_name[0].value].name);
-        console.log("===========================");
-
-        ////Get custom field Nama Barang
+        ////Get custom field Jumlah Barang
         let quantity = await asyncFilter(task.custom_fields, async (i) => {
             return i.id == quantity_cf_id;
         });
+        // console.log("===========================");
+        // console.log(quantity);
+        // console.log("===========================");
+        // console.log(quantity[0].value);
+        // console.log("===========================");
+        quantity = quantity[0].value;
         console.log("===========================");
         console.log(quantity);
         console.log("===========================");
-        console.log(quantity[0].value);
-        console.log("===========================");
-
         ////Get List Master Stock HO
         masterStock = await axios({
             method: "GET",
             url: `https://api.clickup.com/api/v2/list/${list_master_stock_ho}/task`
         });
-        // console.log(masterStock)
+        console.log("===========================");
+        console.log(masterStock)
+        console.log("===========================");
 
         
         // if (typeof theme[0].type_config.options[theme[0].value].id !== 'undefined' && theme[0].type_config.options[theme[0].value].id) {
