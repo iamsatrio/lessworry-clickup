@@ -190,49 +190,32 @@ async function subtaskSync(payload) {
 async function inboundStock(payload) {
     try {
         let task = payload
-
+        console.log(task)
         //Search custom field nama barang
-        let item_name = await asyncFilter(task.custom_fields, async (i) => {
-            return i.id == item_name_cf_id;
-        });
+        // let item_name = await asyncFilter(task.custom_fields, async (i) => {
+        //     return i.id == item_name_cf_id;
+        // });
         
         //Get List Master Stock HO
-        masterStock = await axios({
-            method: "GET",
-            url: `https://api.clickup.com/api/v2/list/${list_master_stock_ho}/task`
-        });
-        masterStock = masterStock.data
+        // masterStock = await axios({
+        //     method: "GET",
+        //     url: `https://api.clickup.com/api/v2/list/${list_master_stock_ho}/task`
+        // });
+        // masterStock = masterStock.data
         
-        console.log(masterStock)
+        // console.log(masterStock)
 
-        if (typeof item_name[0].value !== 'undefined' && item_name[0].value) {
-            console.log('YEEY');
-            await axios({
-                method: "POST",
-                url: `https://api.clickup.com/api/v2/task/${task.id}/field/${epic_release_cf_id}`,
-                data: {
-                    "value": epic_release[0].value
-                }
-            });
-        }
+        // if (typeof item_name[0].value !== 'undefined' && item_name[0].value) {
+        //     console.log('YEEY');
+        //     await axios({
+        //         method: "POST",
+        //         url: `https://api.clickup.com/api/v2/task/${task.id}/field/${epic_release_cf_id}`,
+        //         data: {
+        //             "value": epic_release[0].value
+        //         }
+        //     });
+        // }
 
-        // Set theme from parent task
-        let theme = await asyncFilter(parent.custom_fields, async (i) => {
-            return i.id == theme_cf_id;
-        });
-        console.log(theme[0].type_config.options[theme[0].value].id);
-        if (typeof theme[0].type_config.options[theme[0].value].id !== 'undefined' && theme[0].type_config.options[theme[0].value].id) {
-            console.log('YIIY');
-            await axios({
-                method: "POST",
-                url: `https://api.clickup.com/api/v2/task/${task.id}/field/${theme_cf_id}`,
-                data: {
-                    "value": theme[0].type_config.options[theme[0].value].id
-                }
-            });
-        }
-
-        
         return 'OK'
     } catch (error) {
         console.log("====== Start Err ClickUp =====")
