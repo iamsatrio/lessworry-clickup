@@ -203,7 +203,7 @@ async function inboundStock(payload) {
         let quantity = await asyncFilter(task.custom_fields, async (i) => {
             return i.id == quantity_cf_id;
         });
-        console.log(quantity)
+        // console.log(quantity)
 
         ////Get List Master Stock HO
         masterStock = await axios({
