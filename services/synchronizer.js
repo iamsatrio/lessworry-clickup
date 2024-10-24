@@ -11,6 +11,9 @@ const epic_release_cf_id = "dccb4f61-d762-4403-b560-b452216e34d2"
 const theme_cf_id = "71aa8337-49a5-4ba8-986e-409b46049e4e"
 const quarter_cf_id = "ecb1c819-265d-42bb-918b-bc73d7df93c6"
 
+const list_master_stock_ho = "901604673187"
+const item_name_cf_id = "a3431d54-97ed-4af5-a3fd-02e6f22f1146"
+
 axios.defaults.headers.common['Authorization'] = config.clickupToken;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
@@ -158,6 +161,61 @@ async function subtaskSync(payload) {
             });
         }
 
+        // Set theme from parent task
+        let theme = await asyncFilter(parent.custom_fields, async (i) => {
+            return i.id == theme_cf_id;
+        });
+        console.log(theme[0].type_config.options[theme[0].value].id);
+        if (typeof theme[0].type_config.options[theme[0].value].id !== 'undefined' && theme[0].type_config.options[theme[0].value].id) {
+            console.log('YIIY');
+            await axios({
+                method: "POST",
+                url: `https://api.clickup.com/api/v2/task/${task.id}/field/${theme_cf_id}`,
+                data: {
+                    "value": theme[0].type_config.options[theme[0].value].id
+                }
+            });
+        }
+
+        
+        return 'OK'
+    } catch (error) {
+        console.log("====== Start Err ClickUp =====")
+        console.log(error)
+        console.log("====== End Err ClickUp =====")
+    }
+}
+
+
+async function inboundStock(payload) {
+    try {
+        let task = payload
+
+        //Search custom field nama barang
+        let item_name = await asyncFilter(task.custom_fields, async (i) => {
+            return i.id == item_name_cf_id;
+        });
+        
+        //Get List Master Stock HO
+        masterStock = await axios({
+            method: "GET",
+            url: `https://api.clickup.com/api/v2/list/${list_master_stock_ho}/task`
+        });
+        masterStock = masterStock.data
+        
+        console.log(masterStock)
+
+        if (typeof item_name[0].value !== 'undefined' && item_name[0].value) {
+            console.log('YEEY');
+            await axios({
+                method: "POST",
+                url: `https://api.clickup.com/api/v2/task/${task.id}/field/${epic_release_cf_id}`,
+                data: {
+                    "value": epic_release[0].value
+                }
+            });
+        }
+        
         // Set theme from parent task
         let theme = await asyncFilter(parent.custom_fields, async (i) => {
             return i.id == theme_cf_id;
