@@ -224,7 +224,7 @@ async function inboundStock(payload) {
         });
         ho_item[0]
         console.log("===========================");
-        console.log(ho_item[0].custom_fields);
+        console.log(ho_item[0].id);
         console.log("===========================");
 
         //Get latest Stok Masuk on Master Stock HO
@@ -239,7 +239,7 @@ async function inboundStock(payload) {
                 method: "POST",
                 url: `https://api.clickup.com/api/v2/task/${ho_item[0].id}/field/${ho_inbound_stock_cf_id}`,
                 data: {
-                    "value": parseInt(latest_inbound_stock_ho.value)+quantity
+                    "value": parseInt(latest_inbound_stock_ho.value)+parseInt(quantity)
                 }
             });
 
