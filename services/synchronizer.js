@@ -191,13 +191,13 @@ async function subtaskSync(payload) {
 async function inboundStock(payload) {
     try {
         let task = payload
-        // console.log(task)
+        console.log(task)
         
         ////Get custom field Nama Barang
         let item_name = await asyncFilter(task.custom_fields, async (i) => {
             return i.id == item_name_cf_id;
         });
-        console.log(task)
+        // console.log(task)
 
         ////Get custom field Nama Barang
         let quantity = await asyncFilter(task.custom_fields, async (i) => {
