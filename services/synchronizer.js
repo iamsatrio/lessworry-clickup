@@ -210,7 +210,6 @@ async function inboundStock(payload) {
             method: "GET",
             url: `https://api.clickup.com/api/v2/list/${list_master_stock_ho}/task`
         });
-        masterStock = masterStock.data
         
         console.log(masterStock)
 
