@@ -237,7 +237,7 @@ async function inboundStock(payload) {
                 method: "POST",
                 url: `https://api.clickup.com/api/v2/task/${ho_item[0].id}/field/${ho_inbound_stock_cf_id}`,
                 data: {
-                    "value": parseInt(latest_inbound_stock_ho.value)+parseInt(quantity)
+                    "value": parseInt(latest_inbound_stock_ho)+parseInt(quantity)
                 }
             });
 
