@@ -190,14 +190,14 @@ async function subtaskSync(payload) {
 async function inboundStock(payload) {
     try {
         let task = payload
-        console.log(task)
+        // console.log(task)
         
         ////Search custom field nama barang
         let item_name = await asyncFilter(task.custom_fields, async (i) => {
             return i.id == item_name_cf_id;
         });
         console.log(item_name)
-        
+
         ////Get List Master Stock HO
         masterStock = await axios({
             method: "GET",
