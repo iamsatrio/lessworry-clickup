@@ -197,7 +197,7 @@ async function inboundStock(payload) {
         let item_name = await asyncFilter(task.custom_fields, async (i) => {
             return i.id == item_name_cf_id;
         });
-        console.log(item_name[0].value)
+        console.log(item_name)
 
         ////Get custom field Nama Barang
         let quantity = await asyncFilter(task.custom_fields, async (i) => {
