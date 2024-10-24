@@ -191,19 +191,21 @@ async function inboundStock(payload) {
     try {
         let task = payload
         console.log(task)
-        //Search custom field nama barang
-        // let item_name = await asyncFilter(task.custom_fields, async (i) => {
-        //     return i.id == item_name_cf_id;
-        // });
         
-        //Get List Master Stock HO
-        // masterStock = await axios({
-        //     method: "GET",
-        //     url: `https://api.clickup.com/api/v2/list/${list_master_stock_ho}/task`
-        // });
-        // masterStock = masterStock.data
+        ////Search custom field nama barang
+        let item_name = await asyncFilter(task.custom_fields, async (i) => {
+            return i.id == item_name_cf_id;
+        });
+        console.log(item_name)
         
-        // console.log(masterStock)
+        ////Get List Master Stock HO
+        masterStock = await axios({
+            method: "GET",
+            url: `https://api.clickup.com/api/v2/list/${list_master_stock_ho}/task`
+        });
+        masterStock = masterStock.data
+        
+        console.log(masterStock)
 
         // if (typeof item_name[0].value !== 'undefined' && item_name[0].value) {
         //     console.log('YEEY');
