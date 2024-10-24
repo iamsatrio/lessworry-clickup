@@ -224,7 +224,7 @@ async function inboundStock(payload) {
         });
         ho_item[0]
         console.log("===========================");
-        console.log(ho_item[0].id);
+        console.log(ho_item[0]);
         console.log("===========================");
 
         //Get latest Stok Masuk on Master Stock HO
@@ -232,7 +232,7 @@ async function inboundStock(payload) {
             return i.id == ho_inbound_stock_cf_id;
         });
         console.log("===========================");
-        console.log(latest_inbound_stock_ho.value);
+        console.log(latest_inbound_stock_ho);
         console.log("===========================");
         
             await axios({
