@@ -13,6 +13,7 @@ const quarter_cf_id = "ecb1c819-265d-42bb-918b-bc73d7df93c6"
 
 const list_master_stock_ho = "901604673187"
 const item_name_cf_id = "a3431d54-97ed-4af5-a3fd-02e6f22f1146"
+const quantity_cf_id = "9f792dbb-003b-4052-86f9-444896ac3548"
 
 axios.defaults.headers.common['Authorization'] = config.clickupToken;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -192,11 +193,17 @@ async function inboundStock(payload) {
         let task = payload
         // console.log(task)
         
-        ////Search custom field nama barang
+        ////Get custom field Nama Barang
         let item_name = await asyncFilter(task.custom_fields, async (i) => {
             return i.id == item_name_cf_id;
         });
-        console.log(item_name)
+        console.log(item_name[0].value)
+
+        ////Get custom field Nama Barang
+        let quantity = await asyncFilter(task.custom_fields, async (i) => {
+            return i.id == quantity_cf_id;
+        });
+        console.log(quantity[0].value)
 
         ////Get List Master Stock HO
         masterStock = await axios({
