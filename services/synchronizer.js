@@ -247,7 +247,7 @@ async function outboundStock(payload) {
         let latest_outbound_stock = await asyncFilter(items[0].custom_fields, async (i) => {
             return i.id == outbound_stock_cf_id;
         });
-        latest_inbound_stock = latest_outbound_stock[0].value;
+        latest_outbound_stock = latest_outbound_stock[0].value;
         console.log("===========================");
         console.log(parseInt(latest_outbound_stock))
         console.log("===========================");
