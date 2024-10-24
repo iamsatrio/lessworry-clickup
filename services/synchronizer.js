@@ -222,13 +222,13 @@ async function inboundStock(payload) {
         let ho_item = await asyncFilter(masterStock.data.tasks, async (i) => {
             return i.name == item_name;
         });
-        ho_item = ho_item[0].custom_fields
+        ho_item[0]
         console.log("===========================");
-        console.log(ho_item);
+        console.log(ho_item[0].custom_fields);
         console.log("===========================");
 
         //Get latest Stok Masuk on Master Stock HO
-        let latest_inbound_stock_ho = await asyncFilter(ho_item.custom_fields, async (i) => {
+        let latest_inbound_stock_ho = await asyncFilter(ho_item[0].custom_fields, async (i) => {
             return i.id == ho_inbound_stock_cf_id;
         });
         console.log("===========================");
