@@ -232,19 +232,16 @@ async function inboundStock(payload) {
             return i.id == ho_inbound_stock_cf_id;
         });
         console.log("===========================");
-        console.log(latest_inbound_stock_ho);
+        console.log(latest_inbound_stock_ho.value);
         console.log("===========================");
         
-        // if (typeof theme[0].type_config.options[theme[0].value].id !== 'undefined' && theme[0].type_config.options[theme[0].value].id) {
-        //     console.log('YIIY');
-        //     await axios({
-        //         method: "POST",
-        //         url: `https://api.clickup.com/api/v2/task/${task.id}/field/${theme_cf_id}`,
-        //         data: {
-        //             "value": theme[0].type_config.options[theme[0].value].id
-        //         }
-        //     });
-        // }
+            await axios({
+                method: "POST",
+                url: `https://api.clickup.com/api/v2/task/${ho_item[0].id}/field/${ho_inbound_stock_cf_id}`,
+                data: {
+                    "value": parseInt(latest_inbound_stock_ho.value)+quantity
+                }
+            });
 
         return 'OK'
     } catch (error) {
