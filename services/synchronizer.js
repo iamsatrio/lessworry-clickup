@@ -210,7 +210,11 @@ async function inboundStock(payload) {
             method: "GET",
             url: `https://api.clickup.com/api/v2/list/${list_master_stock_ho}/task`
         });
-        console.log(masterStock)
+        // console.log(masterStock)
+
+        // let master_stock = await asyncFilter(masterStock.data, async (i) => {
+        //     return i.id == item;
+        // });
 
         // if (typeof item_name[0].value !== 'undefined' && item_name[0].value) {
         //     console.log('YEEY');
