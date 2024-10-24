@@ -191,8 +191,118 @@ async function inboundStock(payload) {
     }
 }
 
+
+async function outboundStock(payload) {
+    try {
+        let task = payload
+        // console.log(task);
+
+        let master_stock_cf_id = "";
+
+        ////Get custom field Outlet
+        let outlet = await asyncFilter(task.custom_fields, async (i) => {
+            return i.id == outlet_cf_id;
+        });
+        outlet = outlet[0].type_config.options[outlet[0].value].name;
+        console.log("===========================");
+        console.log(outlet)
+        console.log("===========================");
+
+        if(typeof outlet !== 'undefined' && outlet){
+            if(outlet == "HO"){
+                master_stock_cf_id = master_stock_ho_cf_id
+            }else if(outlet == "Bangka"){
+                master_stock_cf_id = "901604683755"
+            }
+        }
+        console.log("===========================");
+        console.log(master_stock_cf_id);
+        console.log("===========================");
+
+        ////Get custom field Nama Barang
+        let item_name = await asyncFilter(task.custom_fields, async (i) => {
+            return i.id == item_name_cf_id;
+        });
+        item_name = item_name[0].type_config.options[item_name[0].value].name;
+        console.log("===========================");
+        console.log(item_name);
+        console.log("===========================");
+        ////Get custom field Jumlah Barang
+        let quantity = await asyncFilter(task.custom_fields, async (i) => {
+            return i.id == quantity_cf_id;
+        });
+        quantity = quantity[0].value;
+        console.log("===========================");
+        console.log(quantity);
+        console.log("===========================");
+        ////Get List Master Stock HO
+        masterStock = await axios({
+            method: "GET",
+            url: `https://api.clickup.com/api/v2/list/${master_stock_cf_id}/task`
+        });
+        ////Get task List HO based on Nama Barang
+        let items = await asyncFilter(masterStock.data.tasks, async (i) => {
+            return i.name == item_name;
+        });
+
+        //Get latest Stok Masuk on Master Stock
+        let latest_inbound_stock = await asyncFilter(items[0].custom_fields, async (i) => {
+            return i.id == inbound_stock_cf_id;
+        });
+        latest_inbound_stock = latest_inbound_stock[0].value;
+        console.log("===========================");
+        console.log(parseInt(latest_inbound_stock))
+        console.log("===========================");
+        console.log(parseInt(quantity));
+        
+            await axios({
+                method: "POST",
+                url: `https://api.clickup.com/api/v2/task/${items[0].id}/field/${inbound_stock_cf_id}`,
+                data: {
+                    "value": parseInt(latest_inbound_stock)+parseInt(quantity)
+                }
+            });
+
+        
+            if(outlet !== "HO"){
+                masterStock = await axios({
+                    method: "GET",
+                    url: `https://api.clickup.com/api/v2/list/${master_stock_ho_cf_id}/task`
+                });
+                ////Get task List HO based on Nama Barang
+                let ho_items = await asyncFilter(masterStock.data.tasks, async (i) => {
+                    return i.name == item_name;
+                });
+                //Get latest Stok Keluar on Master Stock HO
+                let latest_outbound_stock_ho = await asyncFilter(ho_items[0].custom_fields, async (i) => {
+                    return i.id == outbound_stock_cf_id;
+                });
+                latest_outbound_stock_ho = latest_outbound_stock_ho[0].value;
+                console.log("===========================");
+                console.log(parseInt(latest_outbound_stock_ho))
+                console.log("===========================");
+                console.log(parseInt(quantity));
+                
+                    await axios({
+                        method: "POST",
+                        url: `https://api.clickup.com/api/v2/task/${ho_items[0].id}/field/${outbound_stock_cf_id}`,
+                        data: {
+                            "value": parseInt(latest_outbound_stock_ho)+parseInt(quantity)
+                        }
+                    });
+            }
+
+        return 'OK'
+    } catch (error) {
+        console.log("====== Start Err ClickUp =====")
+        console.log(error)
+        console.log("====== End Err ClickUp =====")
+    }
+}
+
+
 module.exports = {
     dateSync,
     inboundStock,
-    outboundStock,
+    outboundStock
 }
