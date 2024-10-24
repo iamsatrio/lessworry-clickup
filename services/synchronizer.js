@@ -12,8 +12,12 @@ const theme_cf_id = "71aa8337-49a5-4ba8-986e-409b46049e4e"
 const quarter_cf_id = "ecb1c819-265d-42bb-918b-bc73d7df93c6"
 
 const list_master_stock_ho = "901604673187"
-const item_name_cf_id = "a3431d54-97ed-4af5-a3fd-02e6f22f1146"
-const quantity_cf_id = "9f792dbb-003b-4052-86f9-444896ac3548"
+const ho_item_name_cf_id = "a3431d54-97ed-4af5-a3fd-02e6f22f1146"
+const ho_quantity_cf_id = "9f792dbb-003b-4052-86f9-444896ac3548"
+
+const ho_inbound_stock_cf_id = "3a755599-00a3-41d1-bcd3-907b4b0dbe13"
+const ho_outbound_stock_cf_id = "69adcc14-a0f2-4aee-b9cb-e6f956ab52f0"
+
 
 axios.defaults.headers.common['Authorization'] = config.clickupToken;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -195,7 +199,7 @@ async function inboundStock(payload) {
         
         ////Get custom field Nama Barang
         let item_name = await asyncFilter(task.custom_fields, async (i) => {
-            return i.id == item_name_cf_id;
+            return i.id == ho_item_name_cf_id;
         });
         item_name = item_name[0].type_config.options[item_name[0].value].name;
         console.log("===========================");
@@ -203,7 +207,7 @@ async function inboundStock(payload) {
         console.log("===========================");
         ////Get custom field Jumlah Barang
         let quantity = await asyncFilter(task.custom_fields, async (i) => {
-            return i.id == quantity_cf_id;
+            return i.id == ho_quantity_cf_id;
         });
         quantity = quantity[0].value;
         console.log("===========================");
@@ -215,13 +219,20 @@ async function inboundStock(payload) {
             url: `https://api.clickup.com/api/v2/list/${list_master_stock_ho}/task`
         });
         ////Get task List HO based on Nama Barang
-        let ho_item_name = await asyncFilter(masterStock.data.tasks, async (i) => {
+        let ho_item = await asyncFilter(masterStock.data.tasks, async (i) => {
             return i.name == item_name;
         });
         console.log("===========================");
-        console.log(ho_item_name)
+        console.log(ho_item.custom_fields);
         console.log("===========================");
 
+        ////Get latest Stok Masuk on Master Stock HO
+        let latest_inbound_stock_ho = await asyncFilter(ho_item.custom_fields, async (i) => {
+            return i.id == ho_inbound_stock_cf_id;
+        });
+        console.log("===========================");
+        console.log(latest_inbound_stock_ho);
+        console.log("===========================");
         
         // if (typeof theme[0].type_config.options[theme[0].value].id !== 'undefined' && theme[0].type_config.options[theme[0].value].id) {
         //     console.log('YIIY');
