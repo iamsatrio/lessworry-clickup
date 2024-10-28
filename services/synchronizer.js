@@ -104,6 +104,12 @@ async function inboundStock(payload) {
                 master_stock_cf_id = master_stock_ho_cf_id
             }else if(outlet == "Bangka"){
                 master_stock_cf_id = "901604683755"
+            }else if(outlet = "Cipete"){
+                master_stock_cf_id = "901604701656"
+            }else if(outlet = "Duren Tiga"){
+                master_stock_cf_id = "901604701684"
+            }else if(outlet = "Tebet"){
+                master_stock_cf_id = ""
             }
         }
         console.log("===========================");
@@ -211,6 +217,12 @@ async function outboundStock(payload) {
         if(typeof outlet !== 'undefined' && outlet){
             if(outlet == "Bangka"){
                 master_stock_cf_id = "901604683755"
+            }else if(outlet = "Cipete"){
+                master_stock_cf_id = "901604701656"
+            }else if(outlet = "Duren Tiga"){
+                master_stock_cf_id = "901604701684"
+            }else if(outlet = "Tebet"){
+                master_stock_cf_id = ""
             }
         }
         console.log("===========================");
