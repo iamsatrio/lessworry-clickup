@@ -109,7 +109,7 @@ async function inboundStock(payload) {
             }else if(outlet = "Duren Tiga"){
                 master_stock_cf_id = "901604701684"
             }else if(outlet = "Tebet"){
-                master_stock_cf_id = ""
+                master_stock_cf_id = "901604747336"
             }
         }
         console.log("===========================");
@@ -222,7 +222,7 @@ async function outboundStock(payload) {
             }else if(outlet = "Duren Tiga"){
                 master_stock_cf_id = "901604701684"
             }else if(outlet = "Tebet"){
-                master_stock_cf_id = ""
+                master_stock_cf_id = "901604747336"
             }
         }
         console.log("===========================");
