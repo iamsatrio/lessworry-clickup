@@ -111,6 +111,8 @@ async function inboundStock(payload) {
                 master_stock_cf_id = "901604701684"
             }else if(outlet == "Tebet"){
                 master_stock_cf_id = "901604747336"
+            }else if(outlet == "Lebak Bulus"){
+                master_stock_cf_id = "901605246824"
             }
         }
         console.log("===========================");
@@ -224,6 +226,8 @@ async function outboundStock(payload) {
                 master_stock_cf_id = "901604701684"
             }else if(outlet = "Tebet"){
                 master_stock_cf_id = "901604747336"
+            }else if(outlet = "Lebak Bulus"){
+                master_stock_cf_id = "901605246824"
             }
         }
         console.log("===========================");
