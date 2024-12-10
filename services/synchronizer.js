@@ -220,13 +220,13 @@ async function outboundStock(payload) {
         if(typeof outlet !== 'undefined' && outlet){
             if(outlet == "Bangka"){
                 master_stock_cf_id = "901604683755"
-            }else if(outlet = "Cipete"){
-                master_stock_cf_id = "901604701656"
-            }else if(outlet = "Duren Tiga"){
+            }else if(outlet == "Cipete"){
+                master_stock_cf_id == "901604701656"
+            }else if(outlet == "Duren Tiga"){
                 master_stock_cf_id = "901604701684"
-            }else if(outlet = "Tebet"){
+            }else if(outlet == "Tebet"){
                 master_stock_cf_id = "901604747336"
-            }else if(outlet = "Lebak Bulus"){
+            }else if(outlet == "Lebak Bulus"){
                 master_stock_cf_id = "901605246824"
             }
         }
