@@ -221,7 +221,7 @@ async function outboundStock(payload) {
             if(outlet == "Bangka"){
                 master_stock_cf_id = "901604683755"
             }else if(outlet == "Cipete"){
-                master_stock_cf_id == "901604701656"
+                master_stock_cf_id = "901604701656"
             }else if(outlet == "Duren Tiga"){
                 master_stock_cf_id = "901604701684"
             }else if(outlet == "Tebet"){
@@ -285,9 +285,97 @@ async function outboundStock(payload) {
     }
 }
 
+async function purchaseStock(payload) {
+    try {
+        let task = payload
+        // console.log(task);
+
+        let master_stock_cf_id = "";
+
+        ////Get custom field Outlet
+        let outlet = await asyncFilter(task.custom_fields, async (i) => {
+            return i.id == outlet_cf_id;
+        });
+        outlet = outlet[0].type_config.options[outlet[0].value].name;
+
+        console.log("===========================");
+        console.log(outlet)
+        console.log("===========================");
+            
+        if(typeof outlet !== 'undefined' && outlet){
+            if(outlet == "Bangka"){
+                master_stock_cf_id = "901604683755"
+            }else if(outlet == "Cipete"){
+                master_stock_cf_id = "901604701656"
+            }else if(outlet == "Duren Tiga"){
+                master_stock_cf_id = "901604701684"
+            }else if(outlet == "Tebet"){
+                master_stock_cf_id = "901604747336"
+            }else if(outlet == "Lebak Bulus"){
+                master_stock_cf_id = "901605246824"
+            }
+        }
+
+        console.log("===========================");
+        console.log(master_stock_cf_id);
+        console.log("===========================");
+
+        ////Get custom field Nama Barang
+        let item_name = await asyncFilter(task.custom_fields, async (i) => {
+            return i.id == item_name_cf_id;
+        });
+        item_name = item_name[0].type_config.options[item_name[0].value].name;
+        console.log("===========================");
+        console.log(item_name);
+        console.log("===========================");
+        ////Get custom field Jumlah Barang
+        let quantity = await asyncFilter(task.custom_fields, async (i) => {
+            return i.id == quantity_cf_id;
+        });
+        quantity = quantity[0].value;
+        console.log("===========================");
+        console.log(quantity);
+        console.log("===========================");
+        ////Get List Master Stock HO
+        masterStock = await axios({
+            method: "GET",
+            url: `https://api.clickup.com/api/v2/list/${master_stock_cf_id}/task`
+        });
+        ////Get task List HO based on Nama Barang
+        let items = await asyncFilter(masterStock.data.tasks, async (i) => {
+            return i.name == item_name;
+        });
+
+        //Get latest Stok Masuk on Master Stock
+        let latest_inbound_stock = await asyncFilter(items[0].custom_fields, async (i) => {
+            return i.id == inbound_stock_cf_id;
+        });
+        latest_inbound_stock = latest_inbound_stock[0].value;
+        console.log("===========================");
+        console.log(parseInt(latest_inbound_stock))
+        console.log("===========================");
+        console.log(parseInt(quantity));
+        
+            await axios({
+                method: "POST",
+                url: `https://api.clickup.com/api/v2/task/${items[0].id}/field/${inbound_stock_cf_id}`,
+                data: {
+                    "value": parseInt(latest_inbound_stock)+parseInt(quantity)
+                }
+            });
+
+        return 'OK'
+    } catch (error) {
+        console.log("====== Start Err ClickUp =====")
+        console.log(error)
+        console.log("====== End Err ClickUp =====")
+    }
+}
+
 
 module.exports = {
     dateSync,
     inboundStock,
-    outboundStock
+    outboundStock,
+    purchaseStock
 }
