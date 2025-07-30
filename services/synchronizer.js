@@ -113,6 +113,8 @@ async function inboundStock(payload) {
                 master_stock_cf_id = "901604747336"
             }else if(outlet == "Lebak Bulus"){
                 master_stock_cf_id = "901605246824"
+            }else if(outlet == "Fatmawati"){
+                master_stock_cf_id = "901610200633"
             }
         }
         console.log("===========================");
@@ -228,6 +230,8 @@ async function outboundStock(payload) {
                 master_stock_cf_id = "901604747336"
             }else if(outlet == "Lebak Bulus"){
                 master_stock_cf_id = "901605246824"
+            }else if(outlet == "Fatmawati"){
+                master_stock_cf_id = "901610200633"
             }
         }
         console.log("===========================");
@@ -313,6 +317,8 @@ async function purchaseStock(payload) {
                 master_stock_cf_id = "901604747336"
             }else if(outlet == "Lebak Bulus"){
                 master_stock_cf_id = "901605246824"
+            }else if(outlet == "Fatmawati"){
+                master_stock_cf_id = "901610200633"
             }
         }
 
