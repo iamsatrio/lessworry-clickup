@@ -115,6 +115,10 @@ async function inboundStock(payload) {
                 master_stock_cf_id = "901605246824"
             }else if(outlet == "Fatmawati"){
                 master_stock_cf_id = "901610200633"
+            }else if(outlet == "Pondok Indah"){
+                master_stock_cf_id = "901610219828"
+            }else if(outlet == "Jati Padang"){
+                master_stock_cf_id = "901610219841"
             }
         }
         console.log("===========================");
@@ -232,6 +236,10 @@ async function outboundStock(payload) {
                 master_stock_cf_id = "901605246824"
             }else if(outlet == "Fatmawati"){
                 master_stock_cf_id = "901610200633"
+            }else if(outlet == "Pondok Indah"){
+                master_stock_cf_id = "901610219828"
+            }else if(outlet == "Jati Padang"){
+                master_stock_cf_id = "901610219841"
             }
         }
         console.log("===========================");
@@ -319,6 +327,10 @@ async function purchaseStock(payload) {
                 master_stock_cf_id = "901605246824"
             }else if(outlet == "Fatmawati"){
                 master_stock_cf_id = "901610200633"
+            }else if(outlet == "Pondok Indah"){
+                master_stock_cf_id = "901610219828"
+            }else if(outlet == "Jati Padang"){
+                master_stock_cf_id = "901610219841"
             }
         }
 
