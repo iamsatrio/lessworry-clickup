@@ -420,19 +420,22 @@ async function addOutlet(payload) {
         console.log(outlet_id);
         console.log("===========================");
 
-        // outlet_name = outlet[0].type_config.options[outlet[0].value].name;
-        // console.log(outlet_name);
-        // console.log("===========================");
+        outlet_name = outlet[0].type_config.options[outlet[0].value].name;
+        console.log(outlet_name);
+        console.log("===========================");
 
-        // if (typeof outlet !== 'undefined' && outlet) {
-        //     await axios({
-        //         method: "POST",
-        //         url: `https://api.clickup.com/api/v2/task/${task.id}/field/${outlet_cf_id}`,
-        //         data: {
-        //             "value": outlet_id
-        //         }
-        //     });
-        // }
+        if (typeof outlet !== 'undefined' && outlet) {
+            await axios({
+                method: "POST",
+                url: `https://api.clickup.com/api/v2/task/${task.id}/field/${outlet_cf_id}`,
+                data: {
+                    "value": outlet_id
+                }
+            });
+            console.log("===========================");
+            console.log("Set Outlet Berhasil");
+            console.log("===========================");
+        }
 
         return 'OK'
     } catch (error) {
