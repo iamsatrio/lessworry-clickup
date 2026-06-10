@@ -411,7 +411,7 @@ async function addOutlet(payload) {
 
         //Get Linked Task ID
         let linked_task = task.linked_tasks[0].task_id;
-        console.log(linked_task);
+        // console.log(linked_task);
 
         //Get Linked Task Data
         let linkedTaskData = await axios({
