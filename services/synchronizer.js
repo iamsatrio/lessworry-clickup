@@ -415,7 +415,7 @@ async function addOutlet(payload) {
         console.log("============LINKED TASK ID========");
         console.log(linked_task);
 
-        let linkedTaskData = await axios({
+        linkedTaskData = await axios({
             method: "GET",
             url: `https://api.clickup.com/api/v2/task/${linked_task}`
         });
