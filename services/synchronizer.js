@@ -410,36 +410,36 @@ async function addOutlet(payload) {
         console.log("============TASK ID========");
         console.log(task);
 
-        // //Get Linked Task Data
-        // let linkedTaskData = await axios({
-        //     method: "GET",
-        //     url: `https://api.clickup.com/api/v2/task/${linked_task}`
-        // });
-        // console.log(linkedTaskData);
-        // console.log("===========================");
-        // //Get custom field Outlet from Linked Task Data
-        // let outlet = await asyncFilter(linkedTaskData.custom_fields, async (i) => {
-        //     return i.id == outlet_cf_id;
-        // });
-        // console.log(outlet);
-        // console.log("===========================");
+        //Get Linked Task Data
+        let linkedTaskData = await axios({
+            method: "GET",
+            url: `https://api.clickup.com/api/v2/task/${linked_task}`
+        });
+        console.log(linkedTaskData);
+        console.log("===========================");
+        //Get custom field Outlet from Linked Task Data
+        let outlet = await asyncFilter(linkedTaskData.custom_fields, async (i) => {
+            return i.id == outlet_cf_id;
+        });
+        console.log(outlet);
+        console.log("===========================");
 
-        // outlet_id = outlet[0].type_config.options[outlet[0].value].id;
-        // outlet_name = outlet[0].type_config.options[outlet[0].value].name;
-        // console.log("===========================");
-        // console.log(outlet_id)
-        // console.log(outlet_name)
-        // console.log("===========================");
+        outlet_id = outlet[0].type_config.options[outlet[0].value].id;
+        outlet_name = outlet[0].type_config.options[outlet[0].value].name;
+        console.log("===========================");
+        console.log(outlet_id)
+        console.log(outlet_name)
+        console.log("===========================");
 
-        // if (typeof outlet !== 'undefined' && outlet) {
-        //     await axios({
-        //         method: "POST",
-        //         url: `https://api.clickup.com/api/v2/task/${task.id}/field/${outlet_cf_id}`,
-        //         data: {
-        //             "value": outlet_id
-        //         }
-        //     });
-        // }
+        if (typeof outlet !== 'undefined' && outlet) {
+            await axios({
+                method: "POST",
+                url: `https://api.clickup.com/api/v2/task/${task.id}/field/${outlet_cf_id}`,
+                data: {
+                    "value": outlet_id
+                }
+            });
+        }
 
         return 'OK'
     } catch (error) {
