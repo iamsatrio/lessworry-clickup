@@ -408,12 +408,12 @@ async function addOutlet(payload) {
         });
         console.log(linkedTaskData);
         console.log("===========================");
-        // //Get custom field Outlet from Linked Task Data
-        // let outlet = await asyncFilter(linkedTaskData.custom_fields, async (i) => {
-        //     return i.id == outlet_cf_id;
-        // });
-        // console.log(outlet);
-        // console.log("===========================");
+        //Get custom field Outlet from Linked Task Data
+        let outlet = await asyncFilter(linkedTaskData.custom_fields, async (i) => {
+            return i.id == outlet_cf_id;
+        });
+        console.log(outlet);
+        console.log("===========================");
 
         // outlet_id = outlet[0].type_config.options[outlet[0].value].id;
         // outlet_name = outlet[0].type_config.options[outlet[0].value].name;
