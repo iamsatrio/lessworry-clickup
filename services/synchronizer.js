@@ -223,7 +223,7 @@ async function inboundStock(payload) {
 async function outboundStock(payload) {
     try {
         let task = payload
-        // console.log(task);
+        console.log(task);
 
         let master_stock_cf_id = "";
 
