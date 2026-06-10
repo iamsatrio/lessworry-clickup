@@ -406,8 +406,8 @@ async function addOutlet(payload) {
             method: "GET",
             url: `https://api.clickup.com/api/v2/task/${linked_task}`
         });
-        console.log(linkedTaskData);
-        console.log("===========================");
+        // console.log(linkedTaskData);
+        // console.log("===========================");
         //Get custom field Outlet from Linked Task Data
         let outlet = await asyncFilter(linkedTaskData.custom_fields, async (i) => {
             return i.id == outlet_cf_id;
