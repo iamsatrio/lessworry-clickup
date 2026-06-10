@@ -15,22 +15,9 @@ const outbound_stock_cf_id = "69adcc14-a0f2-4aee-b9cb-e6f956ab52f0"
 
 const outlet_cf_id = "71e09edd-64a4-4265-9569-dc8656ad7bd3"
 
-const kemang_outlet_id = "ce56316b-59b7-402b-850a-82760490297c"
-const cipete_outlet_id = "f74f96d9-9559-4e08-9587-75b5b347513e"
-const hampton_outlet_id = "78c55fd2-da99-4f12-ad8e-cade70642c04"
-const tebet_outlet_id = "681777f8-c498-4668-87d1-122badc133bd"
-const lebak_bulus_outlet_id = "554cacb6-a374-44ed-827f-1ffe28574310"
-const fatmawati_outlet_id = "21751bd5-0339-46b5-909d-7dd09d4c7bc2"
-const pondok_indah_outlet_id = "896e042a-1adc-4206-9a6d-994eda0ea126"
-const jati_padang_outlet_id = "092aad61-9ed5-4f58-8d16-5364ed6cae6c"
-const park_serpong_outlet_id = "13d04d47-cabb-4fd2-b612-afc0cfa7bb5f"
-const jagakarsa_outlet_id = "35a46708-0b79-4e15-9cfd-b19eb77e5da6"
-const kain_wangi_pamulang_outlet_id = "3e8f17c7-eac7-4053-a3b0-3b96d377efd1"
-const ho_outlet_id = "058a48e5-a33d-43b5-82e3-7f2f5a25405d"
-
-
 axios.defaults.headers.common['Authorization'] = config.clickupToken;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+
 
 async function dateSync(payload, type) {
     try {
@@ -411,7 +398,7 @@ async function addOutlet(payload) {
         // console.log(task);
 
         //Get Linked Task Data
-        let linked_task = task.linked_tasks[0].link_id;
+        let linked_task = task.linked_tasks[0].task_id;
         console.log("============LINKED TASK ID========");
         console.log(linked_task);
 
