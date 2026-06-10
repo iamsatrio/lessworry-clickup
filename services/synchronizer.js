@@ -412,14 +412,16 @@ async function addOutlet(payload) {
         outlet = await asyncFilter(linkedTask.data.custom_fields, async (i) => {
             return i.id == outlet_cf_id;
         });
-        console.log(outlet);
+        // console.log(outlet);
+        // console.log("===========================");
+
+        outlet_id = outlet[0].type_config.options[outlet[0].value].id;
+        console.log("===========================");
+        console.log(outlet_id);
         console.log("===========================");
 
-        // outlet_id = outlet[0].type_config.options[outlet[0].value].id;
         // outlet_name = outlet[0].type_config.options[outlet[0].value].name;
-        // console.log("===========================");
-        // console.log(outlet_id)
-        // console.log(outlet_name)
+        // console.log(outlet_name);
         // console.log("===========================");
 
         // if (typeof outlet !== 'undefined' && outlet) {
