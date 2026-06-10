@@ -415,12 +415,12 @@ async function addOutlet(payload) {
         console.log("============LINKED TASK ID========");
         console.log(linked_task);
 
-        // let linkedTaskData = await axios({
-        //     method: "GET",
-        //     url: `https://api.clickup.com/api/v2/task/${linked_task}`
-        // });
-        // console.log(linkedTaskData);
-        // console.log("===========================");
+        let linkedTaskData = await axios({
+            method: "GET",
+            url: `https://api.clickup.com/api/v2/task/${linked_task}`
+        });
+        console.log(linkedTaskData);
+        console.log("===========================");
         // //Get custom field Outlet from Linked Task Data
         // let outlet = await asyncFilter(linkedTaskData.custom_fields, async (i) => {
         //     return i.id == outlet_cf_id;
