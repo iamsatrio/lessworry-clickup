@@ -399,15 +399,15 @@ async function addOutlet(payload) {
 
         //Get Linked Task Data
         let linked_task_id = task.linked_tasks[0].task_id;
-        // console.log("============LINKED TASK ID========");
-        // console.log(linked_task_id);
+        console.log("============LINKED TASK ID========");
+        console.log(linked_task_id);
 
         linkedTask = await axios({
             method: "GET",
             url: `https://api.clickup.com/api/v2/task/${linked_task_id}`
         });
-        // console.log(linkedTask.data);
-        // console.log("===========================");
+        console.log(linkedTask.data);
+        console.log("===========================");
 
         //Get custom field Outlet from Linked Task Data
         outlet = await asyncFilter(linkedTask.data.custom_fields, async (i) => {
@@ -416,12 +416,12 @@ async function addOutlet(payload) {
         // console.log(outlet);
         // console.log("===========================");
 
-        // outlet_id = outlet[0].type_config.options[outlet[0].value].id;
+        outlet_id = outlet[0].type_config.options[outlet[0].value].id;
         // console.log("===========================");
         // console.log(outlet_id);
         // console.log("===========================");
 
-        // outlet_name = outlet[0].type_config.options[outlet[0].value].name;
+        outlet_name = outlet[0].type_config.options[outlet[0].value].name;
         // console.log(outlet_name);
         // console.log("===========================");
 
