@@ -407,7 +407,7 @@ async function purchaseStock(payload) {
 async function addOutlet(payload) {
     try {
         let task = payload
-        // console.log(task);
+        console.log(task);
 
         //Get Linked Task ID
         let linked_task = task.linked_tasks[0].task_id;
