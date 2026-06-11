@@ -439,7 +439,8 @@ async function addOutlet(payload) {
         }
 
         //Get Linked Task from Task
-        ref_task = linkedTask.data.linked_tasks[0].task_id;
+        ref_task = linkedTask.data.linked_tasks[linkedTask.data.linked_tasks.length - 1].link_id;
+        console.log(linkedTask.data.linked_tasks.length);
         console.log(ref_task);
         console.log("===========================");
 
