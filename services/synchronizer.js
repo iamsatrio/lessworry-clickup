@@ -433,16 +433,30 @@ async function addOutlet(payload) {
                     "value": outlet_id
                 }
             });
-            // console.log("===========================");
-            // console.log("Set Outlet Berhasil");
-            // console.log("===========================");
+            console.log("===========================");
+            console.log("Set Outlet Berhasil");
+            console.log("===========================");
         }
 
         //Get Linked Task from Task
+        console.log("============SOURCE TASK ID==========");
+        source_task = linkedTask.data.linked_tasks[0].task_id;
+        console.log(source_task);
+        console.log("===========================");
+        console.log("============REF TASK ID==========");
         ref_task = linkedTask.data.linked_tasks[linkedTask.data.linked_tasks.length - 1].link_id;
-        console.log(linkedTask.data.linked_tasks.length);
         console.log(ref_task);
         console.log("===========================");
+
+        if (typeof ref_task !== 'undefined' && ref_task) {
+            await axios({
+                method: "POST",
+                url: `https://api.clickup.com/api/v2/task/${source_task}/link/${ref_task}`,
+            });
+            console.log("===========================");
+            console.log("Set Ref Task Berhasil");
+            console.log("===========================");
+        }
 
         return 'OK'
     } catch (error) {
